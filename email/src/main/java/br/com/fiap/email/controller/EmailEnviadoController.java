@@ -24,4 +24,13 @@ public class EmailEnviadoController {
     private ResponseEntity<List<EmailEnviadoModel>> findAllEnviados(){
         return ResponseEntity.ok(emailEnviadoRepository.findAll());
     }
+    
+    @GetMapping("/data/{data}")
+    private ResponseEntity<List<EmailEnviadoModel>> findAllEnviadosByDate(@PathVariable String data){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String dataFormat = LocalDate.parse(data, formatter).format(formatter2);
+
+        return ResponseEntity.ok(emailEnviadoRepository.obterPorData(dataFormat));
+    }
 }
